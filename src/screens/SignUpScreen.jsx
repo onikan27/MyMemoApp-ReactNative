@@ -8,18 +8,18 @@ import {
 import AppBar from '../components/AppBar';
 import Button from '../components/Button';
 
-const LoginScreen = () => {
+const SignUp = () => {
   return (
     <View style={styles.container}>
       <AppBar />
       <View style={styles.inner}>
-        <Text style={styles.title}>Log In</Text>
+        <Text style={styles.title}>Sign Up</Text>
         <TextInput value="Email Address" style={styles.input} />
         <TextInput value="Password" style={styles.input} />
         <Button label="submit" />
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Not registered?</Text>
-          <Text style={styles.footerLink}>Sign up here!</Text>
+          <Text style={styles.footerText}>Already registered?</Text>
+          <Text style={styles.footerLink}>Login In here!</Text>
         </View>
       </View>
     </View>
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignUp;
