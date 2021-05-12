@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TextInput,
+  TouchableOpacity,
 } from 'react-native';
 import AppBar from '../components/AppBar';
 import Button from '../components/Button';
@@ -19,7 +20,9 @@ const SignUp = () => {
         <Button label="submit" />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered?</Text>
-          <Text style={styles.footerLink}>Login In here!</Text>
+          <TouchableOpacity>
+            <Text style={styles.footerLink}>Login In here!</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

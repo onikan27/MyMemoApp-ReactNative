@@ -1,16 +1,16 @@
 import React from 'react';
 import {
-  View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
-import { string } from 'prop-types';
+import { func, string } from 'prop-types';
 
-const Button = ({ label }) => {
+const Button = ({ label, onPress }) => {
   return (
-    <View style={styles.buttonContainer}>
+    <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
       <Text style={styles.buttonLabel}>{label}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
 
 Button.propTypes = {
   label: string.isRequired,
+  onPress: func,
+};
+
+Button.defaultProps = {
+  onPress: null,
 };
 
 export default Button;

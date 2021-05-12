@@ -1,5 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
@@ -31,9 +36,9 @@ const MemoList = () => (
         <Text style={styles.memoListItemTitle}>買い物リスト</Text>
         <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
       </View>
-      <View>
+      <TouchableOpacity>
         <Feather name="x" size={16} color="#B0B0B0" />
-      </View>
+      </TouchableOpacity>
     </View>
 
     <View style={styles.memoListItem}>
@@ -41,9 +46,9 @@ const MemoList = () => (
         <Text style={styles.memoListItemTitle}>ミーティング</Text>
         <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
       </View>
-      <View>
+      <TouchableOpacity>
         <Feather name="x" size={16} color="#B0B0B0" />
-      </View>
+      </TouchableOpacity>
     </View>
 
     <View style={styles.memoListItem}>
@@ -51,9 +56,9 @@ const MemoList = () => (
         <Text style={styles.memoListItemTitle}>トレーニング</Text>
         <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
       </View>
-      <View>
+      <TouchableOpacity>
         <Feather name="x" size={16} color="#B0B0B0" />
-      </View>
+      </TouchableOpacity>
     </View>
   </View>
 );
