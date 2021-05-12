@@ -56,7 +56,7 @@ const MemoDetailScreen = () => {
           ダミーテキストダミーテキストダミーテキスト
         </Text>
       </ScrollView>
-      <CircleButton style={{ top: 160, buttom: 'auto' }}>+</CircleButton>
+      <CircleButton style={{ top: 160, buttom: 'auto' }} name="edit-2" />
     </View>
   );
 };

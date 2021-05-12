@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   memoListItem: {
@@ -31,7 +32,7 @@ const MemoList = () => (
         <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
       </View>
       <View>
-        <Text>X</Text>
+        <Feather name="x" size={16} color="#B0B0B0" />
       </View>
     </View>
 
@@ -41,7 +42,7 @@ const MemoList = () => (
         <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
       </View>
       <View>
-        <Text>X</Text>
+        <Feather name="x" size={16} color="#B0B0B0" />
       </View>
     </View>
 
@@ -51,7 +52,7 @@ const MemoList = () => (
         <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
       </View>
       <View>
-        <Text>X</Text>
+        <Feather name="x" size={16} color="#B0B0B0" />
       </View>
     </View>
   </View>
