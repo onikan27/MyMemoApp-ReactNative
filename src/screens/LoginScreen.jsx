@@ -5,61 +5,10 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import firebase from 'firebase';
 import Button from '../components/Button';
-
-const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.inner}>
-        <Text style={styles.title}>Log In</Text>
-        <TextInput
-          value={email}
-          style={styles.input}
-          onChangeText={(text) => { setEmail(text); }}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          placeholder="Email Address"
-          textContentType="emailAddress"
-        />
-        <TextInput
-          value={password}
-          style={styles.input}
-          onChangeText={(text) => { setPassword(text); }}
-          autoCapitalize="none"
-          placeholder="Password"
-          secureTextEntry
-          textContentType="password"
-        />
-        <Button
-          label="submit"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'MemoList' }],
-            });
-          }}
-        />
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Not registered?</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'SignUp' }],
-              });
-            }}
-          >
-            <Text style={styles.footerLink}>Sign up here!</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -99,5 +48,68 @@ const styles = StyleSheet.create({
     color: '#467FD3',
   },
 });
+
+const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handlePress = () => {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MemoList' }],
+        });
+      })
+      .catch((error) => {
+        Alert.alert(error.code);
+      });
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.inner}>
+        <Text style={styles.title}>Log In</Text>
+        <TextInput
+          value={email}
+          style={styles.input}
+          onChangeText={(text) => { setEmail(text); }}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          placeholder="Email Address"
+          textContentType="emailAddress"
+        />
+        <TextInput
+          value={password}
+          style={styles.input}
+          onChangeText={(text) => { setPassword(text); }}
+          autoCapitalize="none"
+          placeholder="Password"
+          secureTextEntry
+          textContentType="password"
+        />
+        <Button
+          label="submit"
+          onPress={handlePress}
+        />
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Not registered?</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'SignUp' }],
+              });
+            }}
+          >
+            <Text style={styles.footerLink}>Sign up here!</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 export default LoginScreen;
