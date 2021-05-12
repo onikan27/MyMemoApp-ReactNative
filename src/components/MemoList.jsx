@@ -4,8 +4,10 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   memoListItem: {
@@ -27,40 +29,33 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: '#848484',
   },
+  memoDelete: {
+    padding: 8,
+  },
 });
 
-const MemoList = () => (
-  <View>
-    <View style={styles.memoListItem}>
-      <View>
-        <Text style={styles.memoListItemTitle}>買い物リスト</Text>
-        <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
-      </View>
-      <TouchableOpacity>
-        <Feather name="x" size={16} color="#B0B0B0" />
-      </TouchableOpacity>
-    </View>
+const MemoList = () => {
+  const navigation = useNavigation();
 
-    <View style={styles.memoListItem}>
-      <View>
-        <Text style={styles.memoListItemTitle}>ミーティング</Text>
-        <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
-      </View>
-      <TouchableOpacity>
-        <Feather name="x" size={16} color="#B0B0B0" />
+  return (
+    <View>
+      <TouchableOpacity
+        style={styles.memoListItem}
+        onPress={() => { navigation.navigate('MemoDetail'); }}
+      >
+        <View>
+          <Text style={styles.memoListItemTitle}>買い物リスト</Text>
+          <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => Alert.alert('hoge')}
+          style={styles.memoDelete}
+        >
+          <Feather name="x" size={16} color="#B0B0B0" />
+        </TouchableOpacity>
       </TouchableOpacity>
     </View>
-
-    <View style={styles.memoListItem}>
-      <View>
-        <Text style={styles.memoListItemTitle}>トレーニング</Text>
-        <Text style={styles.memoListItemDate}>2021年5月11日 15:50</Text>
-      </View>
-      <TouchableOpacity>
-        <Feather name="x" size={16} color="#B0B0B0" />
-      </TouchableOpacity>
-    </View>
-  </View>
-);
+  );
+};
 
 export default MemoList;
