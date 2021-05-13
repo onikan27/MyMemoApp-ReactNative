@@ -78,7 +78,7 @@ const MemoDetailScreen = ({ navigation, route }) => {
       <CircleButton
         style={{ top: 60, buttom: 'auto' }}
         name="edit-2"
-        onPress={() => { navigation.navigate('MemoEdit'); }}
+        onPress={() => { navigation.navigate('MemoEdit', { id: memo.id, bodyText: memo.bodyText }); }}
       />
     </View>
   );

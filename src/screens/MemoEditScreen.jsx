@@ -1,25 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
+import { shape, string } from 'prop-types';
+import firebase from 'firebase';
 import CircleButton from '../components/CircleButton';
-
-const MemoEditScreen = ({ navigation }) => {
-  return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
-      <View style={styles.inputContainer}>
-        <TextInput value="買い物リスト" multiline style={styles.input} />
-      </View>
-      <CircleButton
-        name="check"
-        onPress={() => { navigation.goBack(); }}
-      />
-    </KeyboardAvoidingView>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -37,5 +26,52 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
 });
+
+const MemoEditScreen = ({ navigation, route }) => {
+  const { id, bodyText } = route.params;
+  const [body, setbody] = useState(bodyText);
+
+  const handlePress = () => {
+    const { currentUser } = firebase.auth();
+    const db = firebase.firestore();
+    const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+    ref.set({
+      bodyText: body,
+      updatedAt: new Date(),
+    }, { merge: true })
+      .then(() => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        Alert.alert(error.code);
+      });
+  };
+
+  return (
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={body}
+          multiline
+          style={styles.input}
+          onChangeText={(text) => setbody(text)}
+        />
+      </View>
+      <CircleButton
+        name="check"
+        onPress={handlePress}
+      />
+    </KeyboardAvoidingView>
+  );
+};
+
+MemoEditScreen.propTypes = {
+  route: shape({
+    params: shape({
+      id: string,
+      bodyText: string,
+    }),
+  }).isRequired,
+};
 
 export default MemoEditScreen;
