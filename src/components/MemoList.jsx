@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  FlatList,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +14,9 @@ import {
 } from 'prop-types';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   memoListItem: {
     backgroundColor: '#fff',
     flexDirection: 'row',
@@ -40,28 +44,34 @@ const styles = StyleSheet.create({
 const MemoList = ({ memos }) => {
   const navigation = useNavigation();
 
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        style={styles.memoListItem}
+        onPress={() => { navigation.navigate('MemoDetail'); }}
+        key={item.id}
+      >
+        <View>
+          <Text style={styles.memoListItemTitle} numberOfLines={1}>{item.bodyText}</Text>
+          <Text style={styles.memoListItemDate}>{String(item.updatedAt)}</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => Alert.alert('hoge')}
+          style={styles.memoDelete}
+        >
+          <Feather name="x" size={16} color="#B0B0B0" />
+        </TouchableOpacity>
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <View>
-      {memos.map((memo) => {
-        return (
-          <TouchableOpacity
-            style={styles.memoListItem}
-            onPress={() => { navigation.navigate('MemoDetail'); }}
-            key={memo.id}
-          >
-            <View>
-              <Text style={styles.memoListItemTitle}>{memo.bodyText}</Text>
-              <Text style={styles.memoListItemDate}>{String(memo.updatedAt)}</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => Alert.alert('hoge')}
-              style={styles.memoDelete}
-            >
-              <Feather name="x" size={16} color="#B0B0B0" />
-            </TouchableOpacity>
-          </TouchableOpacity>
-        );
-      })}
+    <View style={styles.container}>
+      <FlatList
+        data={memos}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 };
