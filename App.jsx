@@ -8,7 +8,10 @@ import MemoEditScreen from './src/screens/MemoEditScreen';
 import MemoCreateScreen from './src/screens/MemoCreateScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+
 import firebaseConfig from './env';
+
+require('firebase/firestore');
 
 const Stack = createStackNavigator();
 

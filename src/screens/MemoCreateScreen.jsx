@@ -1,25 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
 } from 'react-native';
+import firebase from 'firebase';
 import CircleButton from '../components/CircleButton';
-
-const MemoCreateScreen = ({ navigation }) => {
-  return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
-      <View style={styles.inputContainer}>
-        <TextInput value="" multiline style={styles.input} />
-      </View>
-      <CircleButton
-        name="check"
-        onPress={() => { navigation.goBack(); }}
-      />
-    </KeyboardAvoidingView>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -37,5 +24,45 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
 });
+
+const MemoCreateScreen = ({ navigation }) => {
+  const { currentUser } = firebase.auth();
+  const [bodyText, setBodyText] = useState('');
+
+  const handlePress = () => {
+    const db = firebase.firestore();
+    const ref = db.collection(`users/${currentUser.uid}/memos`);
+    ref.add({
+      bodyText,
+      updatedAt: new Date(),
+    })
+      .then((docref) => {
+        console.log(docref.id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    navigation.goBack();
+  };
+
+  return (
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={bodyText}
+          multiline
+          style={styles.input}
+          onChangeText={(text) => { setBodyText(text); }}
+          autoFocus
+        />
+      </View>
+      <CircleButton
+        name="check"
+        onPress={handlePress}
+      />
+    </KeyboardAvoidingView>
+  );
+};
 
 export default MemoCreateScreen;
