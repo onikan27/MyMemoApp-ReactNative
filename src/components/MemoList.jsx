@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import {
   shape, string, instanceOf, arrayOf,
 } from 'prop-types';
+import firebase from 'firebase';
 import dateToString from '../utils';
 
 const styles = StyleSheet.create({
@@ -45,6 +46,15 @@ const styles = StyleSheet.create({
 const MemoList = ({ memos }) => {
   const navigation = useNavigation();
 
+  const deleteMemo = (id) => {
+    const { currentUser } = firebase.auth();
+    if (currentUser) {
+      const db = firebase.firestore();
+      const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+      ref.delete().catch(() => Alert.alert('削除に失敗しました'));
+    }
+  };
+
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -57,7 +67,7 @@ const MemoList = ({ memos }) => {
           <Text style={styles.memoListItemDate}>{dateToString(item.updatedAt)}</Text>
         </View>
         <TouchableOpacity
-          onPress={() => Alert.alert('hoge')}
+          onPress={() => { deleteMemo(item.id); }}
           style={styles.memoDelete}
         >
           <Feather name="x" size={16} color="#B0B0B0" />
