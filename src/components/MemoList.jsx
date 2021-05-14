@@ -51,7 +51,7 @@ const MemoList = ({ memos }) => {
     if (currentUser) {
       const db = firebase.firestore();
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
-      ref.delete().catch(() => Alert.alert('削除に失敗しました'));
+      ref.delete().catch(() => Alert.alert('削除に失敗しました。'));
     }
   };
 
